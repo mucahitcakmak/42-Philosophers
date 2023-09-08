@@ -20,8 +20,8 @@ enum e_philo_state {
 typedef struct s_philo {
 	pthread_t			thread;
 	enum e_philo_state	state;
-	int					*left_hand;
-	int					*right_hand;
+	pthread_mutex_t		*left_hand;
+	pthread_mutex_t		*right_hand;
 	int					last_eat_time;
 }	t_philo;
 
@@ -33,12 +33,13 @@ typedef struct s_philo_info {
 	int				think_time;
 	int				eat_limit;
 	unsigned long	start_ms;
+	struct timeval	tv;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 }	t_philo_info;
 
 int	ft_atoi(char *str);
-int	get_ms(unsigned long start_usec);
+unsigned long	get_ms(t_philo_info *pi);
 void    philo_life_cycle(t_philo_info   *pi);
 
 #endif

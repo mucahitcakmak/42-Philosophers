@@ -1,11 +1,9 @@
 #include "philo.h"
 
-int	get_ms(unsigned long start_usec)
+unsigned long	get_ms(t_philo_info *pi)
 {
-	struct timeval tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec - start_usec));
+	gettimeofday(&pi->tv, NULL);
+	return ((pi->tv.tv_usec / 1000 + pi->tv.tv_sec * 1000) - pi->start_ms);
 }
 
 void	*thread(void	*numara)
@@ -45,8 +43,9 @@ int main(int ac, char **argv)
 	printf("-----------------\n");
 
 	pi = malloc(sizeof(t_philo_info));
-	gettimeofday(&tv, NULL);
-	pi->start_ms = tv.tv_sec;
+	pi->tv = tv;
+	gettimeofday(&pi->tv, NULL);
+	pi->start_ms = (pi->tv.tv_usec / 1000 + pi->tv.tv_sec * 1000);
 
 	if (ac != 5 && ac != 6)
 		return (1);
