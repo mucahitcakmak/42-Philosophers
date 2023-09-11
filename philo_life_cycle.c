@@ -4,25 +4,18 @@
 // philo_sleep();
 // philo_think();
 
-void    philo_eat(t_philo_info *pi, int index)
+void    philo_eat(t_philo_info *pi)
 {
-    static int  last_philo = 0;
-    int i;
-
-    i = -1;
-    while (++i < pi->size_of_philo)
+    pthread_mutex_lock(&pi->forks[pi->index]);
+    printf("[%lums] %d has taken a fork\n", get_ms(pi), pi->index);
+    if (pi->size_of_philo - 1 == pi->index)
     {
-		if (pthread_mutex_lock(&pi->forks[i]) == -1)
-			printf("HAHAHAHAHA\n");
-        if (pi->size_of_philo % 2 == 1 && i == pi->size_of_philo - 1)
-            pthread_mutex_lock(&pi->forks[0]);
-        else
-            pthread_mutex_lock(&pi->forks[i + 1]);
-        printf("[%lums] %d has taken a fork\n", get_ms(pi), i + 1);
-        printf("[%lums] %d has taken a fork\n", get_ms(pi), i + 1);
-		printf("aa");
-        printf("[%lums] %d eating\n", get_ms(pi), i + 1);
+        pthread_mutex_lock(&pi->forks[0]);
+        printf("%d == %d", pi->size_of_philo - 1, pi->index);
     }
+    else
+        pthread_mutex_lock(&pi->forks[pi->index + 1]);
+    printf("[%lums] %d has taken a fork\n", get_ms(pi), pi->index);
 }
 
 void    philo_sleep(t_philo_info *pi, int index)
@@ -55,20 +48,19 @@ void    philo_think(t_philo_info *pi, int index)
     }
 }
 
-void    philo_life_cycle(t_philo_info   *pi)
+void    *philo_life_cycle(void *pi)
 {
-    int index;
-
-    index = 1;
-    while (++index < 3)
-    {
-        philo_eat(pi, index);
-        usleep(pi->eat_time * 1000);
-        // philo_sleep(pi, index);
-        // usleep(pi->sleep_time * 1000);
-        // philo_think(pi, index);
-        // usleep(pi->think_time * 1000);
+    
+    while (1)
+    {   
+        philo_eat(pi);
     }
+    //usleep(pi->eat_time * 1000);
+    // philo_sleep(pi, index);
+    // usleep(pi->sleep_time * 1000);
+    // philo_think(pi, index);
+    // usleep(pi->think_time * 1000);
+    return (NULL);
 }
 
 

@@ -6,11 +6,6 @@ unsigned long	get_ms(t_philo_info *pi)
 	return ((pi->tv.tv_usec / 1000 + pi->tv.tv_sec * 1000) - pi->start_ms);
 }
 
-void	*thread(void	*numara)
-{
-	return (NULL);
-}
-
 t_philo_info	*arguman_init(t_philo_info *pi, char **argv)
 {
 	long	i;
@@ -28,10 +23,11 @@ t_philo_info	*arguman_init(t_philo_info *pi, char **argv)
 	while (++i < pi->size_of_philo)
 	{
 		pthread_mutex_init(&pi->forks[i], NULL);
-		pi->philos->last_eat_time = pi->start_ms;
-		if (pthread_create(&pi->philos[i].thread, NULL, &thread, (void *)i) != 0)
+		pi->philos[i].last_eat_time = pi->start_ms;
+		pi->index = i;
+		if (pthread_create(&pi->philos[i].thread, NULL, philo_life_cycle, pi) != 0)
 			printf("Hata: Thread oluşturulamadı.\n");
-		usleep(1);
+		usleep(100);
 	}
 	return (pi);
 }
@@ -50,8 +46,6 @@ int main(int ac, char **argv)
 	if (ac != 5 && ac != 6)
 		return (1);
 	arguman_init(pi, argv);
-	
-	philo_life_cycle(pi);
 
 	printf("\n-----------------\n");
 

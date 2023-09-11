@@ -1,5 +1,5 @@
 NAME = philo
-CFLAGS = 
+CFLAGS = -pthread
 
 SRCS = philo.c utils.c philo_life_cycle.c
 
