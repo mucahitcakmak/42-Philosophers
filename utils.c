@@ -1,5 +1,20 @@
 #include "philo.h"
 
+unsigned long	get_ms(t_philo_info *pi)
+{
+	gettimeofday(&pi->tv, NULL);
+	return ((pi->tv.tv_usec / 1000 + pi->tv.tv_sec * 1000) - pi->start_ms);
+}
+
+void	destroy_mutex(t_philo_info *pi)
+{
+	int	i;
+
+	i = -1;
+	while (++i < pi->size_of_philo)
+		pthread_mutex_destroy(&pi->forks[i]);
+}
+
 int	ft_atoi(char *str)
 {
 	int	i;
