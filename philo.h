@@ -19,7 +19,7 @@ typedef struct s_philo {
 
 typedef struct s_philo_info {
 	int				size_of_philo;
-	int				die_time;
+	unsigned long	die_time;
 	int				eat_time;
 	int				sleep_time;
 	int				eat_limit;

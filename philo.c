@@ -15,23 +15,18 @@
 int main(int ac, char **argv)
 {
 	t_philo_info	*pi;
-	printf("-----------------\n");
-	pi = malloc(sizeof(t_philo_info));
 
-	if (ac != 5 && ac != 6 || check_arguman(argv) == -1)
+	pi = malloc(sizeof(t_philo_info));
+	if ((ac != 5 && ac != 6) || check_arguman(argv) == -1)
 		return (1);
 	arguman_init(pi, argv);
 	thread_create(pi);
 	main_loop(pi);
-	printf("\n-----------------\n");
     return (0);
 }
 
 void	arguman_init(t_philo_info *pi, char **argv)
 {
-	struct timeval tv;
-
-	pi->tv = tv;
 	pi->size_of_philo = ft_atoi(argv[1]);
 	pi->die_time = ft_atoi(argv[2]);
 	pi->eat_time = ft_atoi(argv[3]);
@@ -49,7 +44,7 @@ void	arguman_init(t_philo_info *pi, char **argv)
 
 void	thread_create(t_philo_info *pi)
 {
-	long	i;
+	int	i;
 
 	i = -1;
 	pthread_mutex_init(&pi->dead_mutex, NULL);
@@ -77,7 +72,10 @@ void	main_loop(t_philo_info *pi)
 	{
 		pthread_mutex_lock(&pi->check_mutex);
 		if (pi->eat_limit != -1 && pi->eat_counter >= pi->eat_limit * pi->size_of_philo)
+		{
+			pthread_mutex_lock(&pi->dead_mutex);
 			return ;
+		}
 		if (get_ms(pi) - pi->philos[i % pi->size_of_philo].last_eat_time >= pi->die_time)
 		{
 			pthread_mutex_lock(&pi->dead_mutex);
