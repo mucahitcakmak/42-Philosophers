@@ -53,6 +53,7 @@ void	thread_create(t_philo_info *pi)
 
 	i = -1;
 	pthread_mutex_init(&pi->dead_mutex, NULL);
+	pthread_mutex_init(&pi->check_mutex, NULL);
 	while (++i < pi->size_of_philo)
 		pthread_mutex_init(&pi->forks[i], NULL);
 	i = -1;
@@ -74,6 +75,7 @@ void	main_loop(t_philo_info *pi)
 	i = 1;
 	while (1)
 	{
+		pthread_mutex_lock(&pi->check_mutex);
 		if (pi->eat_limit != -1 && pi->eat_counter >= pi->eat_limit * pi->size_of_philo)
 			return ;
 		if (get_ms(pi) - pi->philos[i % pi->size_of_philo].last_eat_time >= pi->die_time)
@@ -82,6 +84,7 @@ void	main_loop(t_philo_info *pi)
 			printf("[%lums] %d died\n", get_ms(pi), (i % pi->size_of_philo) + 1);
 			return ;
 		}
+		pthread_mutex_unlock(&pi->check_mutex);
 		i++;
 		usleep(100);
 	}

@@ -29,6 +29,7 @@ typedef struct s_philo_info {
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	check_mutex;
 }	t_philo_info;
 
 int		check_arguman(char **argv);
