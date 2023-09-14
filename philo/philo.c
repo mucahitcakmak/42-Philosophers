@@ -6,13 +6,13 @@
 /*   By: mucakmak <mucakmak@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:18:06 by mucakmak          #+#    #+#             */
-/*   Updated: 2023/09/12 01:20:40 by mucakmak         ###   ########.fr       */
+/*   Updated: 2023/09/14 16:18:06 by mucakmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int ac, char **argv)
+int	main(int ac, char **argv)
 {
 	t_philo_info	*pi;
 
@@ -22,7 +22,7 @@ int main(int ac, char **argv)
 	arguman_init(pi, argv);
 	thread_create(pi);
 	main_loop(pi);
-    return (0);
+	return (0);
 }
 
 void	arguman_init(t_philo_info *pi, char **argv)
@@ -57,7 +57,8 @@ void	thread_create(t_philo_info *pi)
 		pi->philos[i].pi = pi;
 		pi->philos[i].last_eat_time = get_ms(pi);
 		pi->philos[i].index = i;
-		if (pthread_create(&pi->philos[i].thread, NULL, philo_life_cycle, &pi->philos[i]) != 0)
+		if (pthread_create(&pi->philos[i].thread, NULL, philo_life_cycle,
+				&pi->philos[i]) != 0)
 			printf("Error.\n");
 		usleep(100);
 	}
@@ -71,15 +72,18 @@ void	main_loop(t_philo_info *pi)
 	while (1)
 	{
 		pthread_mutex_lock(&pi->check_mutex);
-		if (pi->eat_limit != -1 && pi->eat_counter >= pi->eat_limit * pi->size_of_philo)
+		if (pi->eat_limit != -1 && pi->eat_counter >= pi->eat_limit
+			* pi->size_of_philo)
 		{
 			pthread_mutex_lock(&pi->dead_mutex);
 			return ;
 		}
-		if (get_ms(pi) - pi->philos[i % pi->size_of_philo].last_eat_time >= pi->die_time)
+		if (get_ms(pi) - pi->philos[i % pi->size_of_philo].last_eat_time
+			>= pi->die_time)
 		{
 			pthread_mutex_lock(&pi->dead_mutex);
-			printf("[%lums] %d died\n", get_ms(pi), (i % pi->size_of_philo) + 1);
+			printf("%lu %d died\n", get_ms(pi),
+				(i % pi->size_of_philo) + 1);
 			return ;
 		}
 		pthread_mutex_unlock(&pi->check_mutex);

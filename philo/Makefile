@@ -1,6 +1,6 @@
+CC = @gcc
 NAME = philo
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
-
+CFLAGS = -Wall -Wextra -Werror
 SRCS = philo.c utils.c philo_life_cycle.c
 
 OBJS = $(SRCS:.c=.o)
@@ -16,6 +16,6 @@ clean:
 fclean: clean
 	@rm -rf $(NAME)
 
-re: $(NAME) clean
+re: fclean all
 
 .PHONY: all clean fclean re

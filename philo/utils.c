@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mucakmak <mucakmak@student.42istanbul.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/14 16:11:17 by mucakmak          #+#    #+#             */
+/*   Updated: 2023/09/14 16:11:26 by mucakmak         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 unsigned long	get_ms(t_philo_info *pi)
@@ -27,7 +39,7 @@ void	destroy_mutex(t_philo_info *pi)
 int	ft_atoi(char *str)
 {
 	int	i;
-	int result;
+	int	result;
 
 	i = 0;
 	result = 0;
