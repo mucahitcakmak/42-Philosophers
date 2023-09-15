@@ -6,7 +6,7 @@
 /*   By: mucakmak <mucakmak@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:11:30 by mucakmak          #+#    #+#             */
-/*   Updated: 2023/09/14 16:12:14 by mucakmak         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:45:13 by mucakmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ typedef struct s_philo_info {
 	pthread_mutex_t	check_mutex;
 }	t_philo_info;
 
-int				check_arguman(char **argv);
-void			ms_sleep(t_philo *p, int time);
-void			destroy_mutex(t_philo_info *pi);
-void			arguman_init(t_philo_info *pi, char **argv);
-void			main_loop(t_philo_info *pi);
-void			thread_create(t_philo_info *pi);
+// philo_life_cycle.c
+void			write_status(t_philo *p, char *str);
+void			check_eat(t_philo *p);
 void			*philo_life_cycle(void *philo);
-int				ft_atoi(char *str);
+
+// philo.c
+void			arguman_init(t_philo_info *pi, char **argv);
+void			thread_create(t_philo_info *pi);
+void			main_loop(t_philo_info *pi);
+
+// utils.c
 unsigned long	get_ms(t_philo_info *pi);
-void			*philo_life_cycle(void *pi);
+void			ms_sleep(t_philo *p, int time);
+int				ft_atoi(char *str);
+int				check_arguman(char **argv);
 
 #endif

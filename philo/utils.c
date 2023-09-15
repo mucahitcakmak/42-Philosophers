@@ -6,7 +6,7 @@
 /*   By: mucakmak <mucakmak@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 16:11:17 by mucakmak          #+#    #+#             */
-/*   Updated: 2023/09/14 16:11:26 by mucakmak         ###   ########.fr       */
+/*   Updated: 2023/09/14 21:44:44 by mucakmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ void	ms_sleep(t_philo *p, int time)
 	dest_time = get_ms(p->pi) + time;
 	while (get_ms(p->pi) < dest_time)
 		usleep(100);
-}
-
-void	destroy_mutex(t_philo_info *pi)
-{
-	int	i;
-
-	i = -1;
-	while (++i < pi->size_of_philo)
-		pthread_mutex_destroy(&pi->forks[i]);
 }
 
 int	ft_atoi(char *str)
@@ -55,6 +46,8 @@ int	ft_atoi(char *str)
 			return (-1);
 		i++;
 	}
+	if (!(str[i] >= '0' && str[i] <= '9') && str[i] != '\0')
+		return (-1);
 	return (result);
 }
 
@@ -63,6 +56,10 @@ int	check_arguman(char **argv)
 	int	i;
 
 	i = -1;
+	if (ft_atoi(argv[0]) == 0)
+		return (-1);
+	if (argv[4] && ft_atoi(argv[4]) == 0)
+		return (-1);
 	while (argv[++i])
 		if (ft_atoi(argv[i]) == -1)
 			return (-1);

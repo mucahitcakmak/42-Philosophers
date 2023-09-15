@@ -6,7 +6,7 @@
 /*   By: mucakmak <mucakmak@student.42istanbul.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 00:18:06 by mucakmak          #+#    #+#             */
-/*   Updated: 2023/09/14 16:18:06 by mucakmak         ###   ########.fr       */
+/*   Updated: 2023/09/14 17:05:36 by mucakmak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int ac, char **argv)
 	t_philo_info	*pi;
 
 	pi = malloc(sizeof(t_philo_info));
-	if ((ac != 5 && ac != 6) || check_arguman(argv) == -1)
+	if ((ac != 5 && ac != 6) || check_arguman(argv + 1) == -1)
 		return (1);
 	arguman_init(pi, argv);
 	thread_create(pi);
